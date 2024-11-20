@@ -1,0 +1,106 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  width: 1170px;
+  margin: 0 auto;
+}
+
+.container {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.header-app {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.header-app--logo {
+  width: 30px;
+  margin-right: 10px;
+  height: 34px;
+}
+
+.footer {
+  width: 100%;
+  font-size: 11px;
+  text-align: center;
+  margin-top: 20px;
+  padding: 20px 0;
+  border-top: 1px solid #ddd;
+}
+
+.product-list {
+  width: 770px;
+  margin: 20px 0;
+  border-right: 1px solid #ddd;
+}
+
+.search {
+  width: 750px;
+  padding: 0 0 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.search-input {
+  width: 350px;
+  padding: 6px;
+}
+
+.product-box {
+  display: -ms-flexbox;
+  display: flex;
+  margin: 20px 20px 0 0;
+}
+
+.product-box--image {
+  margin-right: 20px;
+}
+
+.header-app {
+  margin-bottom: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.user-cart--list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.user-cart--list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.user-cart--list button {
+  text-align: center;
+  margin-right: 15px;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+}
+
+.user-cart {
+  position: relative;
+  width: 300px;
+  margin-left: 20px;
+}
+
+.total-price {
+  width: 100%;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #ddd;
+}
