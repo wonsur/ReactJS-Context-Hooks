@@ -20,6 +20,16 @@ function Products(){
     .catch(err => console.log(err))
   }, [])
 
+
+  function AddToCart({ inStock }) {
+    return inStock ? (
+      <button>Dodaj do koszyka</button>
+    ) : (
+      <button disabled>Dodaj do koszyka</button>
+    );
+  }
+
+
   return(
       <>
         {records.filter(x => x.id <= 5).map(x =>
@@ -29,8 +39,7 @@ function Products(){
             <h2>{x.name}</h2>
             <pre>Cena: {x.price}zł</pre>
             <p>{x.description}</p>
-            <button>Dodaj do koszyka</button>
-
+            <AddToCart inStock={x.in_stock} />
           </div>
           </div>
         )}
