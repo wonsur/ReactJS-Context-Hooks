@@ -63,8 +63,13 @@ function ProductList({ cart, setCart }) {
   );
 }
 
-function Cart({ cart }) {
+function Cart({ cart, setCart }) {
   const totalPrice = cart.reduce((sum, item) => sum + item.price, 0);
+
+  function handleRemove(index) {
+    setCart((prevCart) => prevCart.filter((_, i) => i !== index));
+  }
+
   return (
     <>
       <section className="user-cart">
@@ -74,8 +79,9 @@ function Cart({ cart }) {
         ) : (
           <ul className="user-cart--list">
             {cart.map((item, index) => (
-              <li key={index}>
-                {index} - {item.name} - {item.price}zł
+              <li key={index} className="user-cart--list">
+                <button onClick={() => handleRemove(index)}>X</button>
+                {item.name} - {item.price}zł
               </li>
             ))}
           </ul>
@@ -85,6 +91,7 @@ function Cart({ cart }) {
     </>
   );
 }
+
 function Footer() {
   return <footer className="footer">Copyright by my-shop - 2018</footer>;
 }
@@ -97,7 +104,7 @@ function App() {
       <HeaderApp />
       <div className="container">
         <ProductList cart={cart} setCart={setCart} />
-        <Cart cart={cart} />
+        <Cart cart={cart} setCart={setCart} />
       </div>
       <Footer />
     </>
