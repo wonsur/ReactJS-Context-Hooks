@@ -97,8 +97,26 @@ function Footer() {
 }
 
 function App() {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(() => {
+    const cookies = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("cart="))
+      ?.split("=")[1];
 
+    return cookies ? JSON.parse(cookies) : [];
+  });
+
+  useEffect(() => {
+    function setCookie() {
+      const d = new Date();
+      d.setTime(d.getTime() + 2 * 24 * 60 * 60 * 1000);
+      let expires = "expires=" + d.toUTCString();
+      let cvalue = JSON.stringify(cart);
+      document.cookie = "cart=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    setCookie();
+  }, [cart]);
   return (
     <>
       <HeaderApp />
