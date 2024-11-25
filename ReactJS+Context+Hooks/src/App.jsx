@@ -11,6 +11,7 @@ function HeaderApp() {
 
 function ProductList({ cart, setCart }) {
   const [records, setRecords] = useState([]);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     fetch("http://private-1c19e-reactlesson.apiary-mock.com/products")
@@ -31,20 +32,36 @@ function ProductList({ cart, setCart }) {
     );
   }
 
-  function Search() {
+  function Search({ search, setSearch }) {
+    const handleInputChange = (e) => {
+      setSearch(e.target.value);
+    };
+
     return (
-      <>
-        <div className="search">
-          <input type="text" className="search-input" placeholder="Szukaj..." />
-        </div>
-      </>
+      <div className="search">
+        <input
+          type="text"
+          className="search-input"
+          value={search}
+          onChange={handleInputChange}
+          placeholder="Szukaj..."
+          autoFocus
+        />
+      </div>
     );
   }
 
+  const filteredRecords =
+    search.length >= 3
+      ? records.filter((product) =>
+          product.name.toLowerCase().includes(search.toLowerCase())
+        )
+      : records;
+
   return (
     <section className="product-list">
-      <Search />
-      {records
+      <Search search={search} setSearch={setSearch} />
+      {filteredRecords
         .filter((x) => x.id <= 5)
         .map((x, index) => (
           <div key={index} className="product-box">
@@ -80,8 +97,8 @@ function Cart({ cart, setCart }) {
           <ul className="user-cart--list">
             {cart.map((item, index) => (
               <li key={index} className="user-cart--list">
-                <button onClick={() => handleRemove(index)}>X</button>
-                {item.name} - {item.price}zł
+                <button onClick={() => handleRemove(index)}>x</button>
+                {index} - {item.name} - {item.price}zł
               </li>
             ))}
           </ul>
