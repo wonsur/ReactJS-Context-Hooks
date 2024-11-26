@@ -12,6 +12,8 @@ function HeaderApp() {
 function ProductList({ cart, setCart }) {
   const [records, setRecords] = useState([]);
   const [search, setSearch] = useState("");
+  const [sortType, setSortType] = useState("Deafult");
+  const [sortDirection, setSortDirection] = useState("Rosnąco");
 
   useEffect(() => {
     fetch("http://private-1c19e-reactlesson.apiary-mock.com/products")
@@ -37,6 +39,35 @@ function ProductList({ cart, setCart }) {
       setSearch(e.target.value);
     };
 
+    function handleSortType(e) {
+      let selectedSortType = e.target.value;
+      setSortType(selectedSortType);
+
+      const sortedRecords = [...records];
+      if (selectedSortType === "Nazwa") {
+        sortedRecords.sort((a, b) => a.name.localeCompare(b.name));
+      } else if (selectedSortType === "Cena") {
+        sortedRecords.sort((a, b) => a.price - b.price);
+      } else {
+        sortedRecords.sort((a, b) => a.id - b.id);
+      }
+
+      setRecords(sortedRecords);
+    }
+
+    function handleSortDirection(e) {
+      let selectedSortDirection = e.target.value;
+      setSortDirection(selectedSortDirection);
+
+      const sortedRecords = [...records];
+
+      if (selectedSortDirection === "DSC") {
+        sortedRecords.reverse();
+      }
+
+      setRecords(sortedRecords);
+    }
+
     return (
       <div className="search">
         <input
@@ -47,6 +78,29 @@ function ProductList({ cart, setCart }) {
           placeholder="Szukaj..."
           autoFocus
         />
+
+        <select
+          className="sort-select"
+          value={sortType}
+          onChange={handleSortType}
+          name="selectSortType"
+          id="selectSortType"
+        >
+          <option value="Deafult">Deafult</option>
+          <option value="Nazwa">Nazwa</option>
+          <option value="Cena">Cena</option>
+        </select>
+
+        <select
+          className="sort-select"
+          value={sortDirection}
+          onChange={handleSortDirection}
+          name="selectSortDirection"
+          id="selectSortDirection"
+        >
+          <option value="ASC">Rosnąco</option>
+          <option value="DSC">Malejąco</option>
+        </select>
       </div>
     );
   }
