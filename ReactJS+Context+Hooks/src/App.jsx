@@ -13,7 +13,7 @@ function ProductList({ cart, setCart }) {
   const [records, setRecords] = useState([]);
   const [search, setSearch] = useState("");
   const [sortType, setSortType] = useState("Deafult");
-  const [sortDirection, setSortDirection] = useState("Rosnąco");
+  const [sortDirection, setSortDirection] = useState("ASC");
 
   useEffect(() => {
     fetch("http://private-1c19e-reactlesson.apiary-mock.com/products")
@@ -39,33 +39,42 @@ function ProductList({ cart, setCart }) {
       setSearch(e.target.value);
     };
 
-    function handleSortType(e) {
-      let selectedSortType = e.target.value;
-      setSortType(selectedSortType);
-
+    function sortRecords(selectedSortType, selectedSortDirection) {
       const sortedRecords = [...records];
+
       if (selectedSortType === "Nazwa") {
-        sortedRecords.sort((a, b) => a.name.localeCompare(b.name));
+        sortedRecords.sort((a, b) =>
+          selectedSortDirection === "ASC"
+            ? a.name.localeCompare(b.name)
+            : b.name.localeCompare(a.name)
+        );
       } else if (selectedSortType === "Cena") {
-        sortedRecords.sort((a, b) => a.price - b.price);
+        sortedRecords.sort((a, b) =>
+          selectedSortDirection === "ASC"
+            ? a.price - b.price
+            : b.price - a.price
+        );
       } else {
-        sortedRecords.sort((a, b) => a.id - b.id);
+        sortedRecords.sort((a, b) =>
+          selectedSortDirection === "ASC" ? a.id - b.id : b.id - a.id
+        );
       }
 
       setRecords(sortedRecords);
     }
 
+    function handleSortType(e) {
+      let selectedSortType = e.target.value;
+      setSortType(selectedSortType);
+
+      sortRecords(selectedSortType, sortDirection);
+    }
+
     function handleSortDirection(e) {
-      let selectedSortDirection = e.target.value;
-      setSortDirection(selectedSortDirection);
+      const selecetedSortDirection = e.target.value;
+      setSortDirection(selecetedSortDirection);
 
-      const sortedRecords = [...records];
-
-      if (selectedSortDirection === "DSC") {
-        sortedRecords.reverse();
-      }
-
-      setRecords(sortedRecords);
+      sortRecords(sortType, selecetedSortDirection);
     }
 
     return (
